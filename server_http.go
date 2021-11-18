@@ -7,7 +7,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 func ServerHTTP() {
@@ -18,6 +18,6 @@ func ServerHTTP() {
 
 	router.SetupRoutes(app)
 	log.Fatal(app.Listen(":4444"))
-	
+
 	defer database.DB.Close()
 }

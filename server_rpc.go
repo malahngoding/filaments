@@ -25,7 +25,6 @@ func (s *server) SayHelloAgain(ctx context.Context, in *pb.HelloRequest) (*pb.He
 	return &pb.HelloReply{Message: "Hello again " + in.GetName()}, nil
 }
 
-
 func ServerRPC() {
 	fmt.Println("Running RPC on :9000")
 
@@ -33,11 +32,11 @@ func ServerRPC() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	
+
 	grpcServer := grpc.NewServer()
 
 	pb.RegisterGreeterServer(grpcServer, &server{})
-	
+
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %s", err)
 	}

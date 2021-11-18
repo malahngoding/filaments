@@ -23,9 +23,10 @@ func ConnectDB() {
 		panic("failed to get port")
 	}
 
-	DB, err = gorm.Open("postgres", fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, name))
+	DB, err = gorm.Open("mysql", fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, name))
 
 	if err != nil {
+		println(host, user, password, name)
 		panic("failed to connect database")
 	}
 
