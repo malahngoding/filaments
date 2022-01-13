@@ -14,5 +14,4 @@ func ServerHTTP() {
 
 	router.SetupRoutes(app)
 	log.Fatal(app.Listen(":4444"))
-
 }
