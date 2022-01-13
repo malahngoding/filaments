@@ -4,6 +4,6 @@ import "fmt"
 
 func main() {
 	fmt.Println("Run Filaments")
-	go ServerRPC()
+	// go ServerRPC()
 	ServerHTTP()
 }
