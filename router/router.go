@@ -14,10 +14,10 @@ func SetupRoutes(app *fiber.App) {
 	api := app.Group("/api", logger.New())
 	api.Get("/", handler.Hello)
 
-	// Product
-	product := api.Group("/product")
-	product.Get("/", handler.GetAllProjects)
-	product.Get("/:id", handler.GetProject)
-	product.Post("/", handler.CreateProject)
-	product.Delete("/:id", middleware.Protected(), handler.DeleteProject)
+	// Project
+	project := api.Group("/project")
+	project.Get("/", handler.GetAllProjects)
+	project.Get("/:id", handler.GetProject)
+	project.Post("/", handler.CreateProject)
+	project.Delete("/:id", middleware.Protected(), handler.DeleteProject)
 }

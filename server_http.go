@@ -2,6 +2,7 @@ package main
 
 import (
 	"filaments/router"
+	"fmt"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
@@ -9,6 +10,7 @@ import (
 )
 
 func ServerHTTP() {
+	fmt.Println("Running HTTP on :4444")
 	app := fiber.New()
 	app.Use(cors.New())
 
