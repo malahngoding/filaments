@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"fmt"
@@ -8,13 +8,12 @@ import (
 	"github.com/gofiber/websocket/v2"
 )
 
-func serverWS() {
+func ServerWS() {
 	fmt.Println("Running WS on :4001")
 	app := fiber.New()
 
 	app.Use("/ws", func(c *fiber.Ctx) error {
-		// IsWebSocketUpgrade returns true if the client
-		// requested upgrade to the WebSocket protocol.
+
 		if websocket.IsWebSocketUpgrade(c) {
 			c.Locals("allowed", true)
 			return c.Next()
@@ -23,10 +22,10 @@ func serverWS() {
 	})
 
 	app.Get("/ws/:id", websocket.New(func(c *websocket.Conn) {
-		log.Println(c.Locals("allowed"))  // true
-		log.Println(c.Params("id"))       // 123
-		log.Println(c.Query("v"))         // 1.0
-		log.Println(c.Cookies("session")) // ""
+		log.Println(c.Locals("allowed"))
+		log.Println(c.Params("id"))
+		log.Println(c.Query("v"))
+		log.Println(c.Cookies("session"))
 
 		var (
 			mt  int

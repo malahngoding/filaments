@@ -1,10 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"filaments/server"
+	"fmt"
+)
 
 func main() {
 	fmt.Println("Run Filaments")
-	// go serverWS()
-	// go ServerRPC()
-	ServerHTTP()
+	go server.ServerRPC()
+	go server.ServerWS()
+	server.ServerHTTP()
 }
