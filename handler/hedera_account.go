@@ -2,7 +2,6 @@ package handler
 
 import (
 	"filaments/config"
-	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/hashgraph/hedera-sdk-go/v2"
@@ -34,21 +33,32 @@ func CreateAccount(c *fiber.Ctx) error {
 
 	publicKey := privateKey.PublicKey()
 
-	//Create an account with 1,000 hbar
 	AccountCreateTransaction := hedera.NewAccountCreateTransaction().
-		SetKey(publicKey).SetInitialBalance(hedera.NewHbar(1000))
+		SetKey(publicKey).SetInitialBalance(hedera.NewHbar(1))
 
-	//Return the key on the account
-	accountKey, err := AccountCreateTransaction.GetKey()
+	txResponse, err := AccountCreateTransaction.Execute(client)
+	if err != nil {
+		panic(err)
+	}
+
+	receipt, err := txResponse.GetReceipt(client)
+	if err != nil {
+		panic(err)
+	}
+
+	newAccountId := *receipt.AccountID
+
 	if err != nil {
 		panic(err)
 	}
 
 	return c.JSON(fiber.Map{
-		"messages": fmt.Sprintln(accountKey),
+		"messages": "Account created successfully",
 		"payload": fiber.Map{
 			"newAccount": fiber.Map{
-				"id": accountKey,
+				"id":         newAccountId,
+				"mnemonic":   mnemonic.Words(),
+				"privateKey": privateKey.String(),
 			}},
 		"status": "OK",
 	})
