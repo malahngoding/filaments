@@ -11,5 +11,4 @@ func main() {
 	go server.ServerRPC()
 	go server.ServerWS()
 	server.ServerHTTP()
-
 }
