@@ -6,8 +6,10 @@ import (
 )
 
 func main() {
+
 	fmt.Println("Run Filaments")
 	go server.ServerRPC()
 	go server.ServerWS()
 	server.ServerHTTP()
+
 }

@@ -20,4 +20,10 @@ func SetupRoutes(app *fiber.App) {
 	project.Get("/:id", handler.GetProject)
 	project.Post("/", handler.CreateProject)
 	project.Delete("/:id", middleware.Protected(), handler.DeleteProject)
+
+	// Hedera Account
+	hedera := api.Group("/hedera")
+	hedera.Get("/account", handler.HelloAccount)
+	hedera.Get("/account/create", handler.CreateAccount)
+
 }

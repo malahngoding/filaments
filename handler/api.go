@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// Hello hanlde api status
+// Hello api handle
 func Hello(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"messages": "Hello Future",
