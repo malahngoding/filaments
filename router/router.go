@@ -21,9 +21,16 @@ func SetupRoutes(app *fiber.App) {
 	project.Post("/", handler.CreateProject)
 	project.Delete("/:id", middleware.Protected(), handler.DeleteProject)
 
-	// Hedera Account
+	// Hedera Endpoint
 	hedera := api.Group("/hedera")
-	hedera.Get("/account/create", handler.CreateAccount)
+	// Hedera Account
+	hedera.Post("/account/create", handler.CreateAccount)
 	hedera.Get("/account/:id", handler.HelloAccount)
+	// Hedera Token
+	hedera.Post("/token/create", handler.CreateToken)
+	hedera.Get("/token", handler.HelloToken)
+	// Hedera NFT
+	hedera.Post("/nft/create", handler.CreateToken)
+	hedera.Get("/nft", handler.HelloToken)
 
 }

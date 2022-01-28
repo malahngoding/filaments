@@ -25,9 +25,6 @@ func HelloAccount(c *fiber.Ctx) error {
 		panic(err)
 	}
 
-	//Print the balance of hbars
-
-	//v2.0.0
 	return c.JSON(fiber.Map{
 		"messages": fmt.Sprintf("Hello Account %s", accountID),
 		"payload": fiber.Map{
