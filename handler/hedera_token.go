@@ -101,11 +101,73 @@ func CreateToken(c *fiber.Ctx) error {
 				"treasuryKey": treasuryKey.String(),
 				"supplyKey":   supplyKey.String(),
 				"tokenId": fmt.Sprintf(
-					"%d %d %d",
+					"%d.%d.%d",
 					tokenId.Shard,
 					tokenId.Realm,
 					tokenId.Token,
 				),
+			}},
+		"status": "OK",
+	})
+}
+
+// CreateToken api handler
+func AssociateToken(c *fiber.Ctx) error {
+	type Association struct {
+		TargetId  string `json:"targetId" xml:"targetId" form:"targetId"`
+		TargetKey string `json:"targetKey" xml:"targetKey" form:"targetKey"`
+		TokenId   string `json:"tokenId" xml:"tokenId" form:"tokenId"`
+	}
+
+	a := new(Association)
+	if err := c.BodyParser(a); err != nil {
+		return err
+	}
+
+	client := hedera.ClientForTestnet()
+	client.SetOperator(config.HederaID(), config.HederaPrivateKey())
+
+	targetId, err := hedera.AccountIDFromString(a.TargetId)
+	if err != nil {
+		panic(err)
+	}
+
+	targetKey, err := hedera.PrivateKeyFromString(a.TargetKey)
+	if err != nil {
+		panic(err)
+	}
+
+	tokenId, err := hedera.TokenIDFromString(a.TokenId)
+	if err != nil {
+		panic(err)
+	}
+
+	associateMNT, err := hedera.NewTokenAssociateTransaction().
+		SetAccountID(targetId).
+		SetTokenIDs(tokenId).
+		FreezeWith(client)
+	if err != nil {
+		panic(err)
+	}
+
+	signTx := associateMNT.Sign(targetKey)
+
+	associateMNTSubmit, err := signTx.Execute(client)
+	if err != nil {
+		panic(err)
+	}
+
+	associateMNTrx, err := associateMNTSubmit.GetReceipt(client)
+	if err != nil {
+		panic(err)
+	}
+
+	return c.JSON(fiber.Map{
+		"messages": "Hello Association",
+		"payload": fiber.Map{
+			"newToken": fiber.Map{
+				"name": fmt.Sprintf("MNT Associated to account %s", targetId.String()),
+				"id":   associateMNTrx.Status,
 			}},
 		"status": "OK",
 	})

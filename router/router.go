@@ -28,7 +28,8 @@ func SetupRoutes(app *fiber.App) {
 	hedera.Get("/account/:id", handler.HelloAccount)
 	// Hedera Token
 	hedera.Post("/token/create", handler.CreateToken)
-	hedera.Get("/token", handler.HelloToken)
+	hedera.Post("/token/associate", handler.AssociateToken)
+	hedera.Get("/token/", handler.HelloToken)
 	// Hedera NFT
 	hedera.Post("/nft/create", handler.CreateToken)
 	hedera.Get("/nft", handler.HelloToken)
