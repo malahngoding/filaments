@@ -23,7 +23,7 @@ func SetupRoutes(app *fiber.App) {
 
 	// Hedera Account
 	hedera := api.Group("/hedera")
-	hedera.Get("/account", handler.HelloAccount)
 	hedera.Get("/account/create", handler.CreateAccount)
+	hedera.Get("/account/:id", handler.HelloAccount)
 
 }

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"filaments/config"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/hashgraph/hedera-sdk-go/v2"
@@ -9,10 +10,33 @@ import (
 
 // HelloAccount api handler
 func HelloAccount(c *fiber.Ctx) error {
+	client := hedera.ClientForTestnet()
+	client.SetOperator(config.HederaID(), config.HederaPrivateKey())
+
+	accountID, err := hedera.AccountIDFromString(c.Params("id"))
+	if err != nil {
+		panic(err)
+	}
+
+	query := hedera.NewAccountBalanceQuery().SetAccountID(accountID)
+
+	accountBalance, err := query.Execute(client)
+	if err != nil {
+		panic(err)
+	}
+
+	//Print the balance of hbars
+
+	//v2.0.0
 	return c.JSON(fiber.Map{
-		"messages": "Hello Account",
-		"payload":  fiber.Map{"empty": true},
-		"status":   "OK",
+		"messages": fmt.Sprintf("Hello Account %s", accountID),
+		"payload": fiber.Map{
+			"acccount": fiber.Map{
+				"accountID": fmt.Sprintf("%d.%d.%d", accountID.Shard, accountID.Realm, accountID.Account),
+				"balance":   accountBalance.Hbars.String(),
+			},
+		},
+		"status": "OK",
 	})
 }
 
@@ -34,7 +58,7 @@ func CreateAccount(c *fiber.Ctx) error {
 	publicKey := privateKey.PublicKey()
 
 	AccountCreateTransaction := hedera.NewAccountCreateTransaction().
-		SetKey(publicKey).SetInitialBalance(hedera.NewHbar(1))
+		SetKey(publicKey).SetInitialBalance(hedera.NewHbar(0))
 
 	txResponse, err := AccountCreateTransaction.Execute(client)
 	if err != nil {
