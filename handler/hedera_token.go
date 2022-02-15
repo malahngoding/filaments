@@ -1,8 +1,9 @@
 package handler
 
 import (
-	"filaments/config"
 	"fmt"
+
+	"github.com/malahngoding/filaments/config"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/hashgraph/hedera-sdk-go/v2"

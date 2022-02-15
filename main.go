@@ -1,8 +1,9 @@
 package main
 
 import (
-	"filaments/server"
 	"fmt"
+
+	"github.com/malahngoding/filaments/server"
 )
 
 func main() {

@@ -8,7 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	pb "filaments/proto"
+	pb "github.com/malahngoding/filaments/proto"
 )
 
 type server struct {

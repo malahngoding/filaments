@@ -1,8 +1,8 @@
 package router
 
 import (
-	"filaments/handler"
-	"filaments/middleware"
+	"github.com/malahngoding/filaments/handler"
+	"github.com/malahngoding/filaments/middleware"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"

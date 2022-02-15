@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"filaments/config"
+	"github.com/malahngoding/filaments/config"
 
 	"github.com/gofiber/fiber/v2"
 	jwtware "github.com/gofiber/jwt/v2"

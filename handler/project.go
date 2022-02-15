@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"filaments/config"
+	"github.com/malahngoding/filaments/config"
 
 	"github.com/gofiber/fiber/v2"
 )
