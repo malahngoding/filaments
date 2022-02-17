@@ -33,5 +33,7 @@ func SetupRoutes(app *fiber.App) {
 	// Hedera NFT
 	hedera.Post("/nft/create", handler.CreateToken)
 	hedera.Get("/nft", handler.HelloToken)
-
+	// Hedera Smart Contracts
+	hedera.Post("/smartcontracts/call", handler.ContractCall)
+	hedera.Get("/smartcontracts", handler.HelloSmartContracts)
 }
