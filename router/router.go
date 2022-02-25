@@ -24,16 +24,16 @@ func SetupRoutes(app *fiber.App) {
 	// Hedera Endpoint
 	hedera := api.Group("/hedera")
 	// Hedera Account
-	hedera.Post("/account/create", handler.CreateAccount)
-	hedera.Get("/account/:id", handler.HelloAccount)
+	hedera.Post("/account/create", middleware.Authenticated(), handler.CreateAccount)
+	hedera.Get("/account/:id", middleware.Authenticated(), handler.HelloAccount)
 	// Hedera Token
-	hedera.Post("/token/create", handler.CreateToken)
-	hedera.Post("/token/associate", handler.AssociateToken)
-	hedera.Get("/token/", handler.HelloToken)
+	hedera.Post("/token/create", middleware.Authenticated(), handler.CreateToken)
+	hedera.Post("/token/associate", middleware.Authenticated(), handler.AssociateToken)
+	hedera.Get("/token/", middleware.Authenticated(), handler.HelloToken)
 	// Hedera NFT
-	hedera.Post("/nft/create", handler.CreateToken)
-	hedera.Get("/nft", handler.HelloToken)
+	hedera.Post("/nft/create", middleware.Authenticated(), handler.CreateToken)
+	hedera.Get("/nft", middleware.Authenticated(), handler.HelloToken)
 	// Hedera Smart Contracts
-	hedera.Post("/smartcontracts/call", handler.ContractCall)
-	hedera.Get("/smartcontracts", handler.HelloSmartContracts)
+	hedera.Post("/smartcontracts/call", middleware.Authenticated(), handler.ContractCall)
+	hedera.Get("/smartcontracts", middleware.Authenticated(), handler.HelloSmartContracts)
 }
