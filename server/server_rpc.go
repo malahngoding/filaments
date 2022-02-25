@@ -9,6 +9,7 @@ import (
 	"google.golang.org/grpc"
 
 	pb "github.com/malahngoding/filaments/proto"
+	"github.com/malahngoding/filaments/utils"
 )
 
 type server struct {
@@ -16,8 +17,12 @@ type server struct {
 }
 
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-	log.Printf("Received: %v", in.GetName())
-	return &pb.HelloReply{Message: "Hello"}, nil
+	name := in.GetName()
+	log.Printf("Received: %v", name)
+	if utils.Authstead(ctx) {
+		return &pb.HelloReply{Message: "Hello Future, " + name}, nil
+	}
+	return &pb.HelloReply{Message: "Error"}, nil
 }
 
 func (s *server) SayHelloAgain(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
