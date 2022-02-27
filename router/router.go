@@ -14,6 +14,10 @@ func SetupRoutes(app *fiber.App) {
 	api := app.Group("/api", logger.New())
 	api.Get("/", handler.Hello)
 
+	// Handshake
+	handshake := api.Group("/handshake")
+	handshake.Post("/", middleware.ServerSymmetry(), handler.Handshake)
+
 	// Project
 	project := api.Group("/project")
 	project.Get("/", handler.GetAllProjects)
