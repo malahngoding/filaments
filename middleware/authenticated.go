@@ -1,9 +1,12 @@
 package middleware
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/malahngoding/filaments/config"
+	"github.com/malahngoding/filaments/utils"
 )
 
 func Authenticated() fiber.Handler {
@@ -22,6 +25,19 @@ func Authenticated() fiber.Handler {
 }
 
 func validateToken(token string) bool {
+	key := []byte(config.InsteadToken())
+
 	trimmed := strings.TrimPrefix(token, "Bearer instead_")
-	return trimmed == "U2FsdGVkX18nG9YH1sTHwI9lPqMAeT1q4B8naEcJ2zTakhlptqaczLHV5DFHVOwU"
+	value, err := utils.Decrypt(key, trimmed)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if strings.Contains(value, "GITHUB") {
+
+		return true
+	}
+	if strings.Contains(value, "GITHUB") {
+		return true
+	}
+	return false
 }
