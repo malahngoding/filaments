@@ -6,9 +6,10 @@ import (
 
 // Hello api handle
 func Hello(c *fiber.Ctx) error {
+
 	return c.JSON(fiber.Map{
 		"messages": "Hello Future",
-		"payload":  fiber.Map{"empty": true},
+		"payload":  fiber.Map{"empty": nil},
 		"status":   "OK",
 	})
 }

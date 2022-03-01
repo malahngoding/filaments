@@ -1,9 +1,11 @@
 package handler
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
+	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"
 	"github.com/malahngoding/filaments/config"
 	"github.com/malahngoding/filaments/utils"
@@ -13,6 +15,8 @@ type HandhsakeRequest struct {
 	Identification string `json:"identification" xml:"identification" form:"identification"`
 	Provider       string `json:"provider" xml:"provider" form:"provider"`
 }
+
+var ctx = context.Background()
 
 // Hello api handle
 func Handshake(c *fiber.Ctx) error {
@@ -28,6 +32,9 @@ func Handshake(c *fiber.Ctx) error {
 	if err != nil {
 		fmt.Println(err)
 	}
+	opt, _ := redis.ParseURL(config.RedisAPI())
+	client := redis.NewClient(opt)
+	client.Set(ctx, encrypted, "GRANT", 0)
 
 	return c.JSON(fiber.Map{
 		"messages": "Hello Future",

@@ -3,6 +3,7 @@ module github.com/malahngoding/filaments
 go 1.15
 
 require (
+	github.com/go-redis/redis/v8 v8.11.4 // indirect
 	github.com/gofiber/fiber/v2 v2.27.0
 	github.com/gofiber/jwt/v2 v2.2.7
 	github.com/gofiber/websocket/v2 v2.0.16
