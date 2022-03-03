@@ -28,16 +28,19 @@ func SetupRoutes(app *fiber.App) {
 	// Hedera Endpoint
 	hedera := api.Group("/hedera")
 	// Hedera Account
-	hedera.Post("/account/create", middleware.Authenticated(), handler.CreateAccount)
+	hedera.Post("/account/create", middleware.ServerSymmetry(), handler.CreateAccount)
 	hedera.Get("/account/:id", middleware.Authenticated(), handler.HelloAccount)
+	// Hedera Topics
+	hedera.Post("/topic/create", middleware.ServerSymmetry(), handler.Createtopic)
+	hedera.Post("/topic/submit", handler.SubmitMessageToTopic)
 	// Hedera Token
-	hedera.Post("/token/create", middleware.Authenticated(), handler.CreateToken)
+	hedera.Post("/token/create", middleware.ServerSymmetry(), handler.CreateToken)
 	hedera.Post("/token/associate", middleware.Authenticated(), handler.AssociateToken)
 	hedera.Get("/token/", middleware.Authenticated(), handler.HelloToken)
 	// Hedera NFT
-	hedera.Post("/nft/create", middleware.Authenticated(), handler.CreateToken)
+	hedera.Post("/nft/create", middleware.ServerSymmetry(), handler.CreateToken)
 	hedera.Get("/nft", middleware.Authenticated(), handler.HelloToken)
 	// Hedera Smart Contracts
-	hedera.Post("/smartcontracts/call", middleware.Authenticated(), handler.ContractCall)
-	hedera.Get("/smartcontracts", middleware.Authenticated(), handler.HelloSmartContracts)
+	hedera.Post("/smartcontracts/call", middleware.ServerSymmetry(), handler.ContractCall)
+	hedera.Get("/smartcontracts", middleware.ServerSymmetry(), handler.HelloSmartContracts)
 }
