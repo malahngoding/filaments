@@ -68,7 +68,7 @@ func CreateToken(c *fiber.Ctx) error {
 		SetTreasuryAccountID(treasuryAccountId).
 		SetSupplyType(hedera.TokenSupplyTypeInfinite).
 		SetSupplyKey(supplyKey).
-		SetTokenMemo("b5ef6c8b39db0cd25f6f683a1425ec6f Token for Malah Ngoding Instead").
+		SetTokenMemo("b5ef6c8b39db0cd25f6f683a1425ec6f Token for Filaments").
 		FreezeWith(client)
 	if err != nil {
 		panic(err)
