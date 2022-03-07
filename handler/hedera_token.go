@@ -18,7 +18,7 @@ func HelloToken(c *fiber.Ctx) error {
 		"messages": "Hello Token",
 		"payload": fiber.Map{
 			"newToken": fiber.Map{
-				"name": "Malah Ngoding Token",
+				"name": "b5ef6c8b39db0cd25f6f683a1425ec6f Token",
 			}},
 		"status": "OK",
 	})
@@ -60,7 +60,7 @@ func CreateToken(c *fiber.Ctx) error {
 	}
 
 	tokenCreateTx, err := hedera.NewTokenCreateTransaction().
-		SetTokenName("Malah Ngoding Token").
+		SetTokenName("b5ef6c8b39db0cd25f6f683a1425ec6f Token").
 		SetTokenSymbol("MNT").
 		SetTokenType(hedera.TokenTypeFungibleCommon).
 		SetDecimals(6).
@@ -68,7 +68,7 @@ func CreateToken(c *fiber.Ctx) error {
 		SetTreasuryAccountID(treasuryAccountId).
 		SetSupplyType(hedera.TokenSupplyTypeInfinite).
 		SetSupplyKey(supplyKey).
-		SetTokenMemo("Malah Ngoding Token for Malah Ngoding Instead").
+		SetTokenMemo("b5ef6c8b39db0cd25f6f683a1425ec6f Token for Malah Ngoding Instead").
 		FreezeWith(client)
 	if err != nil {
 		panic(err)
@@ -92,7 +92,7 @@ func CreateToken(c *fiber.Ctx) error {
 		"messages": "Token created successfully",
 		"payload": fiber.Map{
 			"newToken": fiber.Map{
-				"name": "Malah Ngoding Token",
+				"name": "b5ef6c8b39db0cd25f6f683a1425ec6f Token",
 				"treasuryId": fmt.Sprintf(
 					"%d.%d.%d",
 					treasuryAccountId.Shard,

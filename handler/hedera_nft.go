@@ -16,7 +16,7 @@ func HelloNFT(c *fiber.Ctx) error {
 		"messages": "Hello NFT",
 		"payload": fiber.Map{
 			"newToken": fiber.Map{
-				"name": "Malah Ngoding Token",
+				"name": "b5ef6c8b39db0cd25f6f683a1425ec6f Token",
 			}},
 		"status": "OK",
 	})
@@ -31,7 +31,7 @@ func CreateNFT(c *fiber.Ctx) error {
 		"messages": "NFT created successfully",
 		"payload": fiber.Map{
 			"newToken": fiber.Map{
-				"name": "Malah Ngoding Token",
+				"name": "b5ef6c8b39db0cd25f6f683a1425ec6f Token",
 			}},
 		"status": "OK",
 	})
