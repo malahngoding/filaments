@@ -32,10 +32,11 @@ func SetupRoutes(app *fiber.App) {
 	hedera.Get("/account/:id", middleware.Authenticated(), handler.HelloAccount)
 	// Hedera Topics
 	hedera.Post("/topic/create", middleware.ServerSymmetry(), handler.Createtopic)
-	hedera.Post("/topic/submit", handler.SubmitMessageToTopic)
+	hedera.Post("/topic/submit", middleware.Authenticated(), handler.SubmitMessageToTopic)
 	// Hedera Token
 	hedera.Post("/token/create", middleware.ServerSymmetry(), handler.CreateToken)
 	hedera.Post("/token/associate", middleware.Authenticated(), handler.AssociateToken)
+	hedera.Post("/token/disassociate", middleware.Authenticated(), handler.DisassociateToken)
 	hedera.Get("/token/", middleware.Authenticated(), handler.HelloToken)
 	// Hedera NFT
 	hedera.Post("/nft/create", middleware.ServerSymmetry(), handler.CreateToken)

@@ -119,7 +119,6 @@ func AssociateToken(c *fiber.Ctx) error {
 		TargetKey string `json:"targetKey" xml:"targetKey" form:"targetKey"`
 		TokenId   string `json:"tokenId" xml:"tokenId" form:"tokenId"`
 	}
-
 	a := new(Association)
 	if err := c.BodyParser(a); err != nil {
 		return err
@@ -168,6 +167,67 @@ func AssociateToken(c *fiber.Ctx) error {
 		"payload": fiber.Map{
 			"newToken": fiber.Map{
 				"name": fmt.Sprintf("MNT Associated to account %s", targetId.String()),
+				"id":   associateMNTrx.Status,
+			}},
+		"status": "OK",
+	})
+}
+
+// CreateToken api handler
+func DisassociateToken(c *fiber.Ctx) error {
+	type Disassociation struct {
+		TargetId  string `json:"targetId" xml:"targetId" form:"targetId"`
+		TargetKey string `json:"targetKey" xml:"targetKey" form:"targetKey"`
+		TokenId   string `json:"tokenId" xml:"tokenId" form:"tokenId"`
+	}
+	a := new(Disassociation)
+	if err := c.BodyParser(a); err != nil {
+		return err
+	}
+
+	client := hedera.ClientForTestnet()
+	client.SetOperator(config.HederaID(), config.HederaPrivateKey())
+
+	targetId, err := hedera.AccountIDFromString(a.TargetId)
+	if err != nil {
+		panic(err)
+	}
+
+	targetKey, err := hedera.PrivateKeyFromString(a.TargetKey)
+	if err != nil {
+		panic(err)
+	}
+
+	tokenId, err := hedera.TokenIDFromString(a.TokenId)
+	if err != nil {
+		panic(err)
+	}
+
+	disassociateMNT, err := hedera.NewTokenDissociateTransaction().
+		SetAccountID(targetId).
+		SetTokenIDs(tokenId).
+		FreezeWith(client)
+	if err != nil {
+		panic(err)
+	}
+
+	signTx := disassociateMNT.Sign(targetKey)
+
+	disasssociateMNTSubmit, err := signTx.Execute(client)
+	if err != nil {
+		panic(err)
+	}
+
+	associateMNTrx, err := disasssociateMNTSubmit.GetReceipt(client)
+	if err != nil {
+		panic(err)
+	}
+
+	return c.JSON(fiber.Map{
+		"messages": "Hello Disassociate",
+		"payload": fiber.Map{
+			"newToken": fiber.Map{
+				"name": fmt.Sprintf("Token Disassociated from account %s", targetId.String()),
 				"id":   associateMNTrx.Status,
 			}},
 		"status": "OK",
