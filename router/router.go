@@ -44,4 +44,11 @@ func SetupRoutes(app *fiber.App) {
 	// Hedera Smart Contracts
 	hedera.Post("/smartcontracts/call", middleware.ServerSymmetry(), handler.ContractCall)
 	hedera.Get("/smartcontracts", middleware.ServerSymmetry(), handler.HelloSmartContracts)
+
+	// Deta Endpoint
+	deta := api.Group("/deta")
+	// Deta Base
+	deta.Get("/get", handler.GetDeta)
+	deta.Post("/add", handler.PutDeta)
+	deta.Post("/destroy", handler.DestroyDeta)
 }
