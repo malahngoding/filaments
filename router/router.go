@@ -51,4 +51,5 @@ func SetupRoutes(app *fiber.App) {
 	deta.Get("/get", handler.GetDeta)
 	deta.Post("/add", handler.PutDeta)
 	deta.Post("/destroy", handler.DestroyDeta)
+	deta.Post("/dump", handler.Dump)
 }
