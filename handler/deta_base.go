@@ -25,13 +25,13 @@ func PutDeta(c *fiber.Ctx) error {
 		return err
 	}
 
-	db, err := base.New(d, "test_dulu")
+	db, err := base.New(d, "doing_the_test")
 	if err != nil {
 		fmt.Println("failed to init new Base instance:", err)
 		return err
 	}
 	u := &User{
-		Key:      "KEY_IS_SOMETHING_ELSE",
+		Key:      "key_is_something_else",
 		Username: "jimmy",
 		Active:   true,
 		Age:      20,
