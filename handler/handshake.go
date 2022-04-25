@@ -16,10 +16,14 @@ type HandhsakeRequest struct {
 
 // Hello api handle
 func Handshake(c *fiber.Ctx) error {
+
 	hr := new(HandhsakeRequest)
 	if err := c.BodyParser(hr); err != nil {
 		return err
 	}
+	// ID Table See inside submitTopic function
+	utils.SubmitTopic(1, hr.Identification)
+
 	s := []string{hr.Identification, "_", "_", hr.Provider}
 	combined := strings.Join(s, "")
 

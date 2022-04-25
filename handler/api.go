@@ -8,7 +8,7 @@ import (
 func Hello(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"messages": "Hello Future",
-		"payload":  fiber.Map{"data":nil},
+		"payload":  fiber.Map{"data": nil},
 		"status":   "OK",
 	})
 }
