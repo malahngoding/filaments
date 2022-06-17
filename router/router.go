@@ -18,13 +18,6 @@ func SetupRoutes(app *fiber.App) {
 	handshake := api.Group("/handshake")
 	handshake.Post("/", middleware.ServerSymmetry(), handler.Handshake)
 
-	// Project
-	project := api.Group("/project")
-	project.Get("/", handler.GetAllProjects)
-	project.Get("/:id", handler.GetProject)
-	project.Post("/", handler.CreateProject)
-	project.Delete("/:id", middleware.Protected(), handler.DeleteProject)
-
 	// Hedera Endpoint
 	hedera := api.Group("/hedera")
 	// Hedera Account
