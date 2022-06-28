@@ -36,3 +36,9 @@ jobs:
         uses: packagrio/action-bumpr-go@master
         with:
           version_bump_type: ${{ github.event.inputs.version_bump_type }}
+
+      - name: Commit Changes
+        id: commit
+        uses: packagrio/action-releasr-go@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
