@@ -12,11 +12,6 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      version_bump_type:
-        description: "Version Bump Type (major, minor, patch)"
-        required: true
-        default: "patch"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,17 +23,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Bump version
-        id: bump_version
-        uses: packagrio/action-bumpr-go@master
+      - name: Automated Version Bump
+        uses: phips28/gh-action-bump-version@v9.0.20
         with:
-          version_bump_type: ${{ github.event.inputs.version_bump_type }}
-
-      - name: Commit Changes
-        id: commit
-        uses: packagrio/action-releasr-go@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          skip-tag: "true"
