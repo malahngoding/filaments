@@ -22,7 +22,7 @@ func Handshake(c *fiber.Ctx) error {
 		return err
 	}
 	// ID Table See inside submitTopic function
-	go utils.SubmitTopic(1, hr.Identification)
+	go utils.SubmitTopic(1, strings.Join([]string{"instead", hr.Identification}, "_"))
 
 	s := []string{hr.Identification, "_", "_", hr.Provider}
 	combined := strings.Join(s, "")
