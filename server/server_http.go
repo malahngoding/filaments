@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/malahngoding/filaments/router"
 
@@ -15,7 +16,19 @@ func ServerHTTP() {
 	fmt.Println("Running HTTP on :4444")
 	app := fiber.New()
 	app.Use(cors.New())
-	app.Use(limiter.New())
+	app.Use(limiter.New(limiter.Config{
+		Max:        5,
+		Expiration: 1 * time.Minute,
+		KeyGenerator: func(c *fiber.Ctx) string {
+			return c.IP()
+		},
+		LimitReached: func(c *fiber.Ctx) error {
+			return c.SendStatus(fiber.StatusTooManyRequests)
+		},
+		SkipFailedRequests:     false,
+		SkipSuccessfulRequests: false,
+		LimiterMiddleware:      limiter.FixedWindow{},
+	}))
 
 	router.SetupRoutes(app)
 	log.Fatal(app.Listen(":4444"))
