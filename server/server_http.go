@@ -17,7 +17,7 @@ func ServerHTTP() {
 	app := fiber.New()
 	app.Use(cors.New())
 	app.Use(limiter.New(limiter.Config{
-		Max:        5,
+		Max:        120,
 		Expiration: 1 * time.Minute,
 		KeyGenerator: func(c *fiber.Ctx) string {
 			return c.IP()
@@ -27,7 +27,7 @@ func ServerHTTP() {
 		},
 		SkipFailedRequests:     false,
 		SkipSuccessfulRequests: false,
-		LimiterMiddleware:      limiter.FixedWindow{},
+		LimiterMiddleware:      limiter.SlidingWindow{},
 	}))
 
 	router.SetupRoutes(app)
