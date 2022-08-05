@@ -9,7 +9,6 @@ import (
 	"github.com/malahngoding/filaments/utils"
 )
 
- 
 func Authenticated() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		token := c.GetReqHeaders()
@@ -30,13 +29,20 @@ func validateToken(token string) bool {
 
 	trimmed := strings.TrimPrefix(token, "Bearer instead_")
 	value, err := utils.Decrypt(key, trimmed)
+	fmt.Println(key)
 	if err != nil {
 		fmt.Println(err)
 	}
 	if strings.Contains(value, "GITHUB") {
 		return true
 	}
-	if strings.Contains(value, "GITHUB") {
+	if strings.Contains(value, "GOOGLE") {
+		return true
+	}
+	if strings.Contains(value, "METAMASK") {
+		return true
+	}
+	if strings.Contains(value, "HASHPACK") {
 		return true
 	}
 	return false

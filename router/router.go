@@ -38,18 +38,15 @@ func SetupRoutes(app *fiber.App) {
 	hedera.Post("/smartcontracts/call", middleware.ServerSymmetry(), handler.ContractCall)
 	hedera.Get("/smartcontracts", middleware.ServerSymmetry(), handler.HelloSmartContracts)
 
-	// Quiz Box
+	// Comments End Point
+	comment := api.Group(("/comments"))
+	comment.Get("/", middleware.ServerSymmetry(), handler.GetComments)
+	comment.Post("/add", middleware.Authenticated(), handler.AddComment)
+
+	// Quiz Box Test with SQLite
 	quizBox := api.Group("/quiz-box")
 	quizBox.Get("/crud", handler.GetCrud)
 	quizBox.Post("/crud", handler.PostCrud)
 	quizBox.Patch("/crud", handler.PatchCrud)
 	quizBox.Delete("/crud", handler.DeleteCrud)
-
-	// Deta Endpoint
-	deta := api.Group("/deta")
-	// Deta Base
-	deta.Get("/get", handler.GetDeta)
-	deta.Post("/add", handler.PutDeta)
-	deta.Post("/destroy", handler.DestroyDeta)
-	deta.Post("/dump", handler.Dump)
 }
