@@ -11,8 +11,8 @@ import (
 // SetupRoutes setup router api
 func SetupRoutes(app *fiber.App) {
 	// Middleware
+	app.Get("/ping", handler.Hello)
 	api := app.Group("/api", logger.New())
-	api.Get("/", handler.Hello)
 
 	// Handshake
 	handshake := api.Group("/handshake")
