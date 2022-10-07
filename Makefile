@@ -6,12 +6,3 @@ serve:
 
 dev:
 	./bin/air
-
-
-
-
-
-
-
-
-
