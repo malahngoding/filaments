@@ -1,12 +1,13 @@
 package utils
 
 import (
-	"testing"
+	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
 )
 
-func TestAdd(t *testing.T) {
-	if Add(2, 2) != 4 {
-		t.Error("Test Case '2' failed. Expected result is 4")
-	}
-
-}
+var _ = Describe("Add Test", func() {
+	It("return correct value", func() {
+		commands := Add(1, 2)
+		Expect(commands).To(Equal(3))
+	})
+})
